@@ -42,7 +42,7 @@ local npairs = require'nvim-autopairs'
 npairs.setup({ map_cr = true })
 
 require'mason'.setup{}
-require'lspconfig'.sumneko_lua.setup {}
+require'lspconfig'.lua_ls.setup {}
 require'lspconfig'.clangd.setup {}
 require'lspconfig'.gopls.setup {}
 require'lspconfig'.pyright.setup {}
