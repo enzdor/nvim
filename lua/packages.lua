@@ -13,7 +13,7 @@ require('packer').startup(function()
 	use 'ap/vim-css-color'
 	use {
 	    'windwp/nvim-autopairs',
-	    config = function() require("nvim-autopairs").setup {} end
+	    config = function() require("nvim-autopairs").setup {{ map_cr = true }} end
 	}
 	use 'morhetz/gruvbox'
 
@@ -38,20 +38,13 @@ end)
 -- use 'MaxMEllon/vim-jsx-pretty'
 -- use 'alvan/vim-closetag'
 
-local npairs = require'nvim-autopairs'
-npairs.setup({ map_cr = true })
 
-require'mason'.setup{}
-require'lspconfig'.lua_ls.setup {}
-require'lspconfig'.clangd.setup {}
-require'lspconfig'.gopls.setup {}
-require'lspconfig'.pyright.setup {}
-require'lspconfig'.quick_lint_js.setup {
-    cmd = {"quick-lint-js", "--lsp-server"}
-}
 
-vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(
-  vim.lsp.diagnostic.on_publish_diagnostics, {
-    update_in_insert = true,
-  }
-)
+
+
+
+
+
+
+
+

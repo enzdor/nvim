@@ -28,7 +28,7 @@ local parse = require("luasnip.util.parser").parse_snippet
 return {
     s({trig = "gr", dscr = "Create a graph"},
 	fmta([[
-	    .PS	
+	    .PS
 	    Y: box width 0 height 0 invis at (0, <>)
 	    X: box width 0 height 0 invis at (<>, 0)
 	    O: box width 0 height 0 invis at (0, 0)
