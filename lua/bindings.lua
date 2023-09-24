@@ -11,7 +11,7 @@ vim.keymap.set('n', '<leader>s', ':Telescope find_files <CR>', {})
 vim.keymap.set('n', '<leader>t', ':Telescope live_grep <CR>', {})
 
 
--- toggle_completion() -- <leader>tc -- toggle completion
+-- toggle_completion() -- <leader>zc -- toggle completion
 vim.g.cmp_toggle_flag = true -- initialize
 local toggle_completion = function()
 	local ok, cmp = pcall(require, "cmp")
@@ -31,7 +31,7 @@ local toggle_completion = function()
 end
 vim.keymap.set('n', '<leader>zc', toggle_completion, { noremap = true })
 
--- toggle_tabsize() -- <leader>ts -- toggle tabSize
+-- toggle_tabsize() -- <leader>zs -- toggle tabSize
 local toggle_tabSize = function()
 	if vim.bo.tabstop == 8 or vim.o.shiftwidth == 8 then
 		vim.bo.tabstop = 4
