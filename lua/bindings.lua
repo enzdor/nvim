@@ -29,7 +29,7 @@ local toggle_completion = function()
 		print("completion not available")
 	end
 end
-vim.keymap.set('n', '<leader>tc', toggle_completion, { noremap = true })
+vim.keymap.set('n', '<leader>zc', toggle_completion, { noremap = true })
 
 -- toggle_tabsize() -- <leader>ts -- toggle tabSize
 local toggle_tabSize = function()
@@ -47,7 +47,7 @@ local toggle_tabSize = function()
 		print("tabsize now 8")
 	end
 end
-vim.keymap.set('n', '<leader>cs', toggle_tabSize, { noremap = true })
+vim.keymap.set('n', '<leader>zs', toggle_tabSize, { noremap = true })
 
 
 -- Mappings.
