@@ -1,4 +1,6 @@
 -- BINDINGS
+vim.keymap.set('n', '<leader>h', ':wincmd h<CR>', { noremap = true })
+vim.keymap.set('n', '<leader>j', ':wincmd j<CR>', { noremap = true })
 
 vim.keymap.set('n', '<leader>p', '"+p', {})
 vim.keymap.set('v', '<leader>y', '"+yy', {})
@@ -30,6 +32,7 @@ local toggle_completion = function()
 	end
 end
 vim.keymap.set('n', '<leader>zc', toggle_completion, { noremap = true })
+
 
 -- toggle_tabsize() -- <leader>zs -- toggle tabSize
 local toggle_tabSize = function()
