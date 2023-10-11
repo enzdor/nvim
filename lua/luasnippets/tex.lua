@@ -113,6 +113,18 @@ return {
 			]],
 			{ i(1), i(0) })
 	),
+	s({ trig = "tb", dscr = "New table" },
+		fmta([[
+			\vspace{0.5cm}
+			{
+			\centering
+			\begin{tabular}{<>}
+				<>
+			\end{tabular}\par
+			}
+			]],
+			{ i(1), i(0) })
+	),
 	s({ trig = ";b", dscr = "Beta" },
 		fmta([[\beta]],
 			{})
