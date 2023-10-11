@@ -36,7 +36,7 @@ return {
 			{ i(1), i(0), rep(1) }
 		)
 	),
-	s({ trig = "eeq", dscr = "Create an equation environment" },
+	s({ trig = "mm", dscr = "Create an equation environment" },
 		fmta([[
 			\begin{equation}
 			<>

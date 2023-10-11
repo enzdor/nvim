@@ -15,84 +15,43 @@ cmp.setup({
 		end,
 	},
 	mapping = {
-		--[[
-		['<C-e>'] = cmp.mapping.abort(),
-		['<C-Space>'] = cmp.mapping.complete(),
-		-- ['<Tab>'] = cmp.mapping.confirm({ select = true }),
-		['<Tab>'] = cmp.mapping(function(fallback)
-			if ls.expand_or_jumpable() then
-				ls.expand_or_jump()
-			else
-				cmp.mapping.confirm({ select = true })
-				fallback()
-			end
-		end, { "i", "s" }),
-		['<S-Tab>'] = cmp.mapping(function(fallback)
-			if ls.jumpable( -1) then
-				ls.jump( -1)
-			else
-				fallback()
-			end
-		end),
-		["<C-f>"] = cmp.mapping(function(fallback)
-			if cmp.visible() then
-				cmp.select_next_item()
-				-- You could replace the expand_or_jumpable() calls with expand_or_locally_jumpable()
-				-- they way you will only jump inside the snippet region
-			elseif ls.expand_or_jumpable() then
-				ls.expand_or_jump()
-			elseif has_words_before() then
-				cmp.complete()
-			else
-				fallback()
-			end
-		end, { "i", "s" }),
-		["<C-b>"] = cmp.mapping(function(fallback)
-			if cmp.visible() then
-				cmp.select_prev_item()
-				-- elseif ls.jumpable( -1) then
-				-- 	ls.jump( -1)
-			else
-				fallback()
-			end
-		end, { "i", "s" }),
-		--]]
-		--     ['<C-b>'] = cmp.mapping.scroll_docs(-4),
-		--     ['<C-f>'] = cmp.mapping.scroll_docs(4),
-		['<C-b>'] = cmp.mapping.scroll_docs( -4),
-		['<C-f>'] = cmp.mapping.scroll_docs(4),
+		--['<C-b>'] = cmp.mapping.scroll_docs( -4),
+		--['<C-f>'] = cmp.mapping.scroll_docs(4),
 		['<C-Space>'] = cmp.mapping.complete(),
 		['<C-e>'] = cmp.mapping.abort(),
-		-- ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
-		["<CR>"] = cmp.mapping({
+		["<Tab>"] = cmp.mapping({
 			i = function(fallback)
 				if cmp.visible() and cmp.get_active_entry() then
 					cmp.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = false })
-				else
+					-- You could replace the expand_or_jumpable() calls with expand_or_locally_jumpable()
+					-- they way you will only jump inside the snippet region
+				elseif ls.expand_or_locally_jumpable() then
+					ls.expand_or_jump()
+				elseif has_words_before() then
+					cmp.complete()
 					fallback()
 				end
 			end,
 			s = cmp.mapping.confirm({ select = true }),
 			c = cmp.mapping.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = true }),
 		}),
-		["<Tab>"] = cmp.mapping(function(fallback)
-			if cmp.visible() then
-				cmp.select_next_item()
-				-- You could replace the expand_or_jumpable() calls with expand_or_locally_jumpable()
-				-- they way you will only jump inside the snippet region
-			elseif ls.expand_or_locally_jumpable() then
-				ls.expand_or_jump()
-			elseif has_words_before() then
-				cmp.complete()
+		["<S-Tab>"] = cmp.mapping(function(fallback)
+			if ls.jumpable( -1) then
+				ls.jump( -1)
 			else
 				fallback()
 			end
 		end, { "i", "s" }),
-		["<S-Tab>"] = cmp.mapping(function(fallback)
+		['<C-f>'] = cmp.mapping(function(fallback)
+			if cmp.visible() then
+				cmp.select_next_item()
+			else
+				fallback()
+			end
+		end, { "i", "s" }),
+		['<C-b>'] = cmp.mapping(function(fallback)
 			if cmp.visible() then
 				cmp.select_prev_item()
-			elseif ls.jumpable( -1) then
-				ls.jump( -1)
 			else
 				fallback()
 			end
