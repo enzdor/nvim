@@ -29,11 +29,10 @@ cmp.setup({
 					ls.expand_or_jump()
 				elseif has_words_before() then
 					cmp.complete()
+				else
 					fallback()
 				end
 			end,
-			s = cmp.mapping.confirm({ select = true }),
-			c = cmp.mapping.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = true }),
 		}),
 		["<S-Tab>"] = cmp.mapping(function(fallback)
 			if ls.jumpable( -1) then

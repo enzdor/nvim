@@ -12,6 +12,9 @@ vim.keymap.set('n', '<leader>l', ':wincmd l<CR>', { noremap = true })
 vim.keymap.set('n', '<leader>s', ':Telescope find_files <CR>', {})
 vim.keymap.set('n', '<leader>t', ':Telescope live_grep <CR>', {})
 
+-- Auto-correct previous spelling mistake
+vim.keymap.set('i', '<C-l>', '<c-g>u<Esc>[s1z=`]a<c-g>u', {})
+
 
 -- toggle_completion() -- <leader>zc -- toggle completion
 vim.g.cmp_toggle_flag = true -- initialize
@@ -21,11 +24,11 @@ local toggle_completion = function()
 		if vim.g.cmp_toggle_flag then
 			vim.g.cmp_toggle_flag = false
 			cmp.setup.buffer { enabled = false }
-			print("turned off")
+			print("completion turned off")
 		else
 			vim.g.cmp_toggle_flag = true
 			cmp.setup.buffer { enabled = true }
-			print("turned on")
+			print("completion turned on")
 		end
 	else
 		print("completion not available")
@@ -39,15 +42,15 @@ local toggle_tabSize = function()
 	if vim.bo.tabstop == 8 or vim.o.shiftwidth == 8 then
 		vim.bo.tabstop = 4
 		vim.o.shiftwidth = 4
-		print("tabsize now 4")
+		print("tabsize = 4")
 	elseif vim.bo.tabstop == 4 or vim.o.shiftwidth == 4 then
 		vim.bo.tabstop = 2
 		vim.o.shiftwidth = 2
-		print("tabsize now 2")
+		print("tabsize = 2")
 	elseif vim.bo.tabstop == 2 or vim.o.shiftwidth == 2 then
 		vim.bo.tabstop = 8
 		vim.o.shiftwidth = 8
-		print("tabsize now 8")
+		print("tabsize = 8")
 	end
 end
 vim.keymap.set('n', '<leader>zs', toggle_tabSize, { noremap = true })
@@ -85,16 +88,6 @@ local on_attach = function(client, bufnr)
 end
 
 
--- vim.cmd[[
--- " Expand or jump in insert mode
--- imap <silent><expr> <Tab> luasnip#expand_or_jumpable() ? '<Plug>luasnip-expand-or-jump' : '<Tab>'
---
--- " Jump forward through tabstops in visual mode
--- smap <silent><expr> <Tab> luasnip#jumpable(1) ? '<Plug>luasnip-jump-next' : '<Tab>'
--- imap <silent><expr> <S-Tab> luasnip#jumpable(-1) ? '<Plug>luasnip-jump-prev' : '<S-Tab>'
--- smap <silent><expr> <S-Tab> luasnip#jumpable(-1) ? '<Plug>luasnip-jump-prev' : '<S-Tab>'
--- ]]
-
 
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
 require 'mason'.setup {}
@@ -105,7 +98,7 @@ require 'lspconfig'.lua_ls.setup {
 }
 require 'lspconfig'.clangd.setup {
 	on_attach = on_attach,
-	capabilities = capabilities
+	capabilities = capabilities,
 }
 require 'lspconfig'.gopls.setup {
 	on_attach = on_attach,

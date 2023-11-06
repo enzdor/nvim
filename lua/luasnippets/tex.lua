@@ -65,9 +65,22 @@ return {
 			]],
 			{ i(1), i(0) })
 	),
+	s({ trig = "mt", dscr = "Math text box" },
+		fmta([[
+			\mbox{<>}<>
+			]],
+			{ i(1), i(0) }
+		)
+	),
 	s({ trig = "bb", dscr = "Bold text" },
 		fmta([[
 			\textbf{<>}<>
+			]],
+			{ i(1), i(0) })
+	),
+	s({ trig = "ii", dscr = "Italicized text" },
+		fmta([[
+			\textit{<>}<>
 			]],
 			{ i(1), i(0) })
 	),
@@ -122,8 +135,13 @@ return {
 				<>
 			\end{tabular}\par
 			}
+			\vspace{0.5cm}
 			]],
 			{ i(1), i(0) })
+	),
+	s({ trig = ";a", dscr = "alpha" },
+		fmta([[\alpha]],
+			{})
 	),
 	s({ trig = ";b", dscr = "Beta" },
 		fmta([[\beta]],
