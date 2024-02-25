@@ -24,7 +24,7 @@ local postfix = require("luasnip.extras.postfix").postfix
 local types = require("luasnip.util.types")
 local parse = require("luasnip.util.parser").parse_snippet
 
--- make bindings for: 
+-- make bindings for:
 
 return {
 	s({ trig = "ee", dscr = "Create an environment" },
@@ -68,6 +68,13 @@ return {
 	s({ trig = "mt", dscr = "Math text box" },
 		fmta([[
 			\mbox{<>}<>
+			]],
+			{ i(1), i(0) }
+		)
+	),
+	s({ trig = "vv", dscr = "Verbatim text, used for code" },
+		fmta([[
+			\verb+<>+<>
 			]],
 			{ i(1), i(0) }
 		)
@@ -139,6 +146,12 @@ return {
 			]],
 			{ i(1), i(0) })
 	),
+	s({ trig = "sum", dscr = "Summation" },
+		fmta([[
+			\sum_{<>}^{<>}<>
+			]],
+			{ i(1), i(2), i(0) })
+	),
 	s({ trig = ";a", dscr = "alpha" },
 		fmta([[\alpha]],
 			{})
@@ -159,8 +172,74 @@ return {
 		fmta([[\delta]],
 			{})
 	),
-	s({ trig = "dd", dscr = "delta" },
+	s({ trig = "dd", dscr = "dots" },
 		fmta([[\dots]],
 			{})
+	),
+	s({ trig = ";e", dscr = "epsilon" },
+		fmta([[\varepsilon]],
+			{})
+	),
+	s({ trig = ";E", dscr = "Epsilon" },
+		fmta([[\Epsilon]],
+			{})
+	),
+	s({ trig = ";g", dscr = "gamma" },
+		fmta([[\gamma]],
+			{})
+	),
+	s({ trig = ";t", dscr = "theta" },
+		fmta([[\theta]],
+			{})
+	),
+	s({ trig = ";n", dscr = "eta" },
+		fmta([[\eta]],
+			{})
+	),
+	s({ trig = ";pi", dscr = "pi" },
+		fmta([[\pi]],
+			{})
+	),
+	s({ trig = ";vs", dscr = "variable with subscript" },
+		fmta([[{<>}_{<>}<>]],
+			{ i(1), i(2), i(0) })
+	),
+	s({ trig = ";vo", dscr = "variable with overscript" },
+		fmta([[{<>}^{<>}<>]],
+			{ i(1), i(2), i(0) })
+	),
+	s({ trig = ";vb", dscr = "variable with subscript and overscript" },
+		fmta([[{<>}_{<>}^{<>}<>]],
+			{ i(1), i(2), i(3), i(0) })
+	),
+	s({ trig = "img", dscr = "insert an image according to path" },
+		fmta([[
+		\begin{center}
+			\includegraphics[height=6cm]{<>}
+		\end{center}
+		<>
+		]],
+			{ i(1), i(0) })
+	),
+	s({ trig = "tl(%d)", dscr = "Create table line", regTrig = true },
+		{ d(1,
+			function(args, snip)
+				local nodes = {}
+				local number = tonumber(snip.captures[1])
+				if number ~= 0 then
+					for j = 1, number do
+						if j == number then
+							table.insert(nodes, i(j, " "))
+						else
+							table.insert(nodes, i(j, " "))
+							table.insert(nodes, t("&"))
+						end
+					end
+					return sn(nil, nodes)
+				else
+				end
+			end
+		) },
+		{ delimiters = "[]" }
 	),
 }
