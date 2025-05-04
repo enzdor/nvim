@@ -1,7 +1,4 @@
 -- BINDINGS
-vim.keymap.set('n', '<leader>h', ':wincmd h<CR>', { noremap = true })
-vim.keymap.set('n', '<leader>j', ':wincmd j<CR>', { noremap = true })
-
 vim.keymap.set('n', '<leader>p', '"+p', {})
 vim.keymap.set('v', '<leader>y', '"+yy', {})
 vim.keymap.set('n', '<leader>ww', ':set wrap!<CR>', { noremap = true })
@@ -11,10 +8,43 @@ vim.keymap.set('n', '<leader>k', ':wincmd k<CR>', { noremap = true })
 vim.keymap.set('n', '<leader>l', ':wincmd l<CR>', { noremap = true })
 vim.keymap.set('n', '<leader>s', ':Telescope find_files <CR>', {})
 vim.keymap.set('n', '<leader>t', ':Telescope live_grep <CR>', {})
+vim.keymap.set('t', '<C-q>', '<C-\\><C-n>', { noremap = true })
 
 -- Auto-correct previous spelling mistake
 vim.keymap.set('i', '<C-l>', '<c-g>u<Esc>[s1z=`]a<c-g>u', {})
 
+-- toggle horizontal and vertical split
+local toggle_vertical_horizontal = function()
+	local layout = vim.fn.winlayout(vim.fn.tabpagenr())
+	if layout[1] == "col" then
+		vim.cmd("wincmd L")
+	elseif layout[1] == "row" then
+		vim.cmd("wincmd K")
+	end
+end
+vim.keymap.set('n', '<leader>1', toggle_vertical_horizontal, { noremap = true })
+
+local increase_size = function()
+	local layout = vim.fn.winlayout(vim.fn.tabpagenr())
+	if layout[1] == "col" then
+		vim.cmd("8 wincmd +")
+	elseif layout[1] == "row" then
+		vim.cmd("8 wincmd >")
+	end
+end
+
+local decrease_size = function()
+	local layout = vim.fn.winlayout(vim.fn.tabpagenr())
+	if layout[1] == "col" then
+		vim.cmd("8 wincmd -")
+	elseif layout[1] == "row" then
+		vim.cmd("8 wincmd <")
+	end
+end
+
+
+vim.keymap.set('n', '<leader>9', decrease_size, { noremap = true })
+vim.keymap.set('n', '<leader>0', increase_size, { noremap = true })
 
 -- toggle_completion() -- <leader>zc -- toggle completion
 vim.g.cmp_toggle_flag = true -- initialize
@@ -39,17 +69,17 @@ vim.keymap.set('n', '<leader>zc', toggle_completion, { noremap = true })
 
 -- toggle_tabsize() -- <leader>zs -- toggle tabSize
 local toggle_tabSize = function()
-	if vim.bo.tabstop == 8 or vim.o.shiftwidth == 8 then
+	if vim.bo.tabstop == 8 or vim.bo.shiftwidth == 8 then
 		vim.bo.tabstop = 4
-		vim.o.shiftwidth = 4
+		vim.bo.shiftwidth = 4
 		print("tabsize = 4")
-	elseif vim.bo.tabstop == 4 or vim.o.shiftwidth == 4 then
+	elseif vim.bo.tabstop == 4 or vim.bo.shiftwidth == 4 then
 		vim.bo.tabstop = 2
-		vim.o.shiftwidth = 2
+		vim.bo.shiftwidth = 2
 		print("tabsize = 2")
-	elseif vim.bo.tabstop == 2 or vim.o.shiftwidth == 2 then
+	elseif vim.bo.tabstop == 2 or vim.bo.shiftwidth == 2 then
 		vim.bo.tabstop = 8
-		vim.o.shiftwidth = 8
+		vim.bo.shiftwidth = 8
 		print("tabsize = 8")
 	end
 end
@@ -60,8 +90,6 @@ vim.keymap.set('n', '<leader>zs', toggle_tabSize, { noremap = true })
 -- See `:help vim.diagnostic.*` for documentation on any of the below functions
 local opts = { noremap = true, silent = true }
 vim.keymap.set('n', '<space>e', vim.diagnostic.open_float, opts)
-vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, opts)
-vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts)
 vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist, opts)
 
 -- Use an on_attach function to only map the following keys
@@ -99,6 +127,10 @@ require 'lspconfig'.lua_ls.setup {
 require 'lspconfig'.clangd.setup {
 	on_attach = on_attach,
 	capabilities = capabilities,
+	cmd = {
+		"clangd",
+		"--fallback-style=webkit"
+	}
 }
 require 'lspconfig'.gopls.setup {
 	on_attach = on_attach,
@@ -108,13 +140,11 @@ require 'lspconfig'.pyright.setup {
 	on_attach = on_attach,
 	capabilities = capabilities
 }
-require 'lspconfig'.tsserver.setup {
+require 'lspconfig'.ts_ls.setup {
 	on_attach = on_attach,
 	capabilities = capabilities
 }
 
-vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(
-	vim.lsp.diagnostic.on_publish_diagnostics, {
+vim.diagnostic.config({
 	update_in_insert = true,
-}
-)
+})

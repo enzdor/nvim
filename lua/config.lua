@@ -1,7 +1,7 @@
-vim.bo.tabstop = 8
-vim.bo.softtabstop = 0
-vim.o.shiftwidth = 8
-vim.wo.wrap = false
+vim.go.tabstop = 4
+vim.go.softtabstop = 0
+vim.go.shiftwidth = 4
+vim.go.wrap = false
 vim.o.smartcase = true
 vim.o.swapfile = true
 vim.o.backup = false
@@ -13,7 +13,7 @@ vim.o.cmdheight = 2
 vim.wo.number = true
 vim.o.updatetime = 300
 vim.g.mapleader = ' '
-vim.wo.rnu = true
-vim.wo.scrolloff = 10
+vim.go.rnu = true
+vim.go.scrolloff = 10
 
 vim.cmd [[colorscheme gruvbox]]
